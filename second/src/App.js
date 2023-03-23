@@ -6,7 +6,7 @@ import Comment from './Comment';
 const comment = {
   author: {
     firstName: 'Chinh',
-    avtSrc: 'avt source'
+    avtSrc: 'avt source.'
   }
 }
 function App() {
