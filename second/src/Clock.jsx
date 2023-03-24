@@ -22,13 +22,6 @@ export default class Clock extends React.Component {
     }
   }
 
-  componentDidMount() {
-    fetchApi().then(res => this.setState((preState) => ({
-      ...preState,
-      lists: res
-    })))
-  }
-
   getTime = () => {
     const newState = {
       ...this.state, // giữ lại các state không thay đổi
@@ -37,6 +30,15 @@ export default class Clock extends React.Component {
       }
     }
     this.setState(newState)
+  }
+
+  componentDidMount() {
+    fetchApi().then(res => this.setState((preState) => ({
+      ...preState,
+      lists: res
+    })))
+
+    setInterval(this.getTime, 1000)
   }
 
   render() {
