@@ -53,6 +53,10 @@ export default class Clock extends React.Component {
     console.log('componentDidUpdate')
   }
 
+  componentWillUnmount() {
+    console.log('componentWillUnmount')
+  }
+
   render() {
     return (
       <div>
