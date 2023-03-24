@@ -4,6 +4,8 @@ import Welcome from './welcome'
 import Comment from './Comment'
 import Clock from './Clock'
 import { useState } from 'react'
+import BareInput from './BareInput'
+import Layout from './Layout'
 
 const comment = {
   author: {
@@ -24,6 +26,10 @@ function App() {
         <Welcome name="Chinh Phan" />
         <Comment author={comment.author} age="20" />
         <img src={logo} className="App-logo" alt="logo" />
+        <Layout>
+          <h2>Layout</h2>
+          <BareInput type="text" placeholder="place holder" autoFocus className="custom-input" onChange={() => {}} />
+        </Layout>
       </header>
     </div>
   );
