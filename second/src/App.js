@@ -6,6 +6,7 @@ import Clock from './Clock'
 import { useState } from 'react'
 import BareInput from './BareInput'
 import Layout from './Layout'
+import BareButton from './BareButton'
 
 const comment = {
   author: {
@@ -29,6 +30,7 @@ function App() {
         <Layout>
           <h2>Layout</h2>
           <BareInput type="text" placeholder="place holder" autoFocus className="custom-input" onChange={() => {}} />
+          <BareButton />
         </Layout>
       </header>
     </div>
