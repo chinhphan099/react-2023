@@ -9,6 +9,7 @@ import Layout from './Layout'
 import BareButton from './BareButton'
 import LoginControl from './LoginControl'
 import CorrectlyState from './CorrectlyState'
+import ProductList from './ProductList/ProductList'
 
 const comment = {
   author: {
@@ -22,6 +23,7 @@ function App() {
 
   return (
     <div className="App">
+      <ProductList />
       <header className="App-header">
         <button onClick={() => setName('Apple')}>Change Clock Name</button>
         <button onClick={() => setVisible(!visible)}>Toogle Show/Hide Clock</button>
