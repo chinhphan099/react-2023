@@ -8,6 +8,7 @@ import BareInput from './BareInput'
 import Layout from './Layout'
 import BareButton from './BareButton'
 import LoginControl from './LoginControl'
+import CorrectlyState from './CorrectlyState'
 
 const comment = {
   author: {
@@ -34,6 +35,7 @@ function App() {
           <BareButton />
         </Layout>
         <LoginControl isHide={false} />
+        <CorrectlyState />
       </header>
     </div>
   );
