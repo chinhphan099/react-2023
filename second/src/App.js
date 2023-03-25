@@ -10,6 +10,7 @@ import BareButton from './BareButton'
 import LoginControl from './LoginControl'
 import CorrectlyState from './CorrectlyState'
 import ProductList from './ProductList/ProductList'
+import Form from './Form/Form'
 
 const comment = {
   author: {
@@ -19,10 +20,11 @@ const comment = {
 }
 function App() {
   const [clockName, setName] = useState('Casio')
-  const [visible, setVisible] = useState(true)
+  const [visible, setVisible] = useState(false)
 
   return (
     <div className="App">
+      <Form />
       <ProductList />
       <header className="App-header">
         <button onClick={() => setName('Apple')}>Change Clock Name</button>
