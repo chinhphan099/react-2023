@@ -7,6 +7,7 @@ import { useState } from 'react'
 import BareInput from './BareInput'
 import Layout from './Layout'
 import BareButton from './BareButton'
+import LoginControl from './LoginControl'
 
 const comment = {
   author: {
@@ -32,6 +33,7 @@ function App() {
           <BareInput type="text" placeholder="place holder" autoFocus className="custom-input" onChange={() => {}} />
           <BareButton />
         </Layout>
+        <LoginControl isHide={false} />
       </header>
     </div>
   );
