@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
 export class TemperatureInput extends Component {
   handleChange = (event) => {
@@ -8,12 +9,18 @@ export class TemperatureInput extends Component {
     return (
       <div>
         <fieldset>
-          <legend>Độ {this.props.title}</legend>
-          <input type="number" value={this.props.temperature} onChange={this.handleChange} />
+          <legend>{this.props.title}</legend>
+          <input type="tel" value={this.props.temperature} onChange={this.handleChange} />
         </fieldset>
       </div>
     )
   }
+}
+
+TemperatureInput.propTypes = {
+  title: PropTypes.string,
+  temperature: PropTypes.string,
+  onTemperatureChange: PropTypes.func
 }
 
 export default TemperatureInput

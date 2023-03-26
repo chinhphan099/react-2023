@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import Boiler from './Boiler'
 import TemperatureInput from './TemperatureInput'
 
 const SCALE_NAMES = {
@@ -38,13 +39,13 @@ export class Calculator extends Component {
   }
   render() {
     const { temperature, temSymbol } = this.state
-    console.log(temperature)
-    const getTemC = temSymbol === SCALE_NAMES.f ? convert(temperature, tinhDoC) : temperature
-    const getTemF = temSymbol === SCALE_NAMES.c ? convert(temperature, tinhDoF) : temperature
+    const celsius = temSymbol === SCALE_NAMES.f ? convert(temperature, tinhDoC) : temperature
+    const fahrenheit = temSymbol === SCALE_NAMES.c ? convert(temperature, tinhDoF) : temperature
     return (
       <div>
-        <TemperatureInput title='Độ C' temperature={getTemC} onTemperatureChange={this.handleChange(SCALE_NAMES.c)} />
-        <TemperatureInput title='Độ F' temperature={getTemF} onTemperatureChange={this.handleChange(SCALE_NAMES.f)} />
+        <TemperatureInput title='Độ C' temperature={celsius} onTemperatureChange={this.handleChange(SCALE_NAMES.c)} />
+        <TemperatureInput title='Độ F' temperature={fahrenheit} onTemperatureChange={this.handleChange(SCALE_NAMES.f)} />
+        <Boiler celsius={celsius} />
       </div>
     )
   }

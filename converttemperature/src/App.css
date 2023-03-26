@@ -1,1 +1,13 @@
+.App {
+  padding: 40px;
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+}
 
+input {
+  width: 100%;
+  padding: 4px 10px;
+  font-size: 15px;
+  box-sizing: border-box;
+}
