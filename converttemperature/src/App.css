@@ -1,8 +1,9 @@
 .App {
-  padding: 40px;
   width: 100%;
   max-width: 400px;
   margin: 0 auto;
+  padding: 40px;
+  box-sizing: border-box;
 }
 
 input {
