@@ -11,6 +11,7 @@ import LoginControl from './LoginControl'
 import CorrectlyState from './CorrectlyState'
 import ProductList from './ProductList/ProductList'
 import Form from './Form/Form'
+import UncontrolledComponent from './Form/UncontrolledComponent'
 
 const comment = {
   author: {
@@ -24,6 +25,7 @@ function App() {
 
   return (
     <div className="App">
+      <UncontrolledComponent />
       <Form />
       <ProductList />
       <header className="App-header">
