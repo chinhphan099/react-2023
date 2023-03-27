@@ -18,10 +18,10 @@ class Layout extends Component {
   render() {
     const { left, right } = this.props
     return (
-      <div>
+      <>
         {left}
         {right}
-      </div>
+      </>
     )
   }
 }
@@ -29,14 +29,14 @@ class Layout extends Component {
 export default class Composition extends Component {
   render() {
     return (
-      <div>
+      <>
         Composition
         <Button />
         <Button className="yellow">
           Yellow
         </Button>
         <Layout left={<Button className="left">Left</Button>} right={<Button className="right">Right</Button>} />
-      </div>
+      </>
     )
   }
 }

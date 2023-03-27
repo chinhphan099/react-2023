@@ -22,7 +22,7 @@ class YellowButton extends Button {
 export default class Inheritance extends Component {
   render() {
     return (
-      <div>Inheritance <Button /> <YellowButton /></div>
+      <>Inheritance <Button /> <YellowButton /></>
     )
   }
 }
