@@ -12,6 +12,8 @@ import CorrectlyState from './CorrectlyState'
 import ProductList from './ProductList/ProductList'
 import Form from './Form/Form'
 import UncontrolledComponent from './Form/UncontrolledComponent'
+import Inheritance from './CompositionInheritance/Inheritance'
+import Composition from './CompositionInheritance/Composition'
 
 const comment = {
   author: {
@@ -25,6 +27,8 @@ function App() {
 
   return (
     <div className="App">
+      <Inheritance />
+      <Composition />
       <UncontrolledComponent />
       <Form />
       <ProductList />
