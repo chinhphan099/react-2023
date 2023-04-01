@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import * as styled from './ButtonStyles'
+import styles from './Buttons.module.css'
 export class Button extends Component {
   render() {
     return (
@@ -13,6 +14,8 @@ export class Button extends Component {
         <styled.LinkComponent22 href="#" borderRed={true}>
           <span>LinkComponent22</span>
         </styled.LinkComponent22>
+        <button className={styles.redButton}>Red Button</button>
+        <button className={styles.redButton}>Normal Button</button>
       </>
     )
   }
