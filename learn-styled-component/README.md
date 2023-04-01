@@ -1,5 +1,6 @@
 ## Document
 [Styled-component](https://styled-components.com/docs/basics)
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
