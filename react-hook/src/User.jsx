@@ -1,8 +1,7 @@
-import React, { useEffect } from 'react'
-import { useState } from 'react'
+import { useState, useEffect, createContext } from 'react'
+import UserProfile from './UserProfile'
 
 const initialAddress = () => {
-  console.log('initialAddress')
   return {
     nation: 'Vietnam',
     city: {
@@ -11,8 +10,34 @@ const initialAddress = () => {
     }
   }
 }
+const fetchApi = () => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      return resolve({
+        nation: 'Thai',
+        city: {
+          street: 'abc',
+          house: 'dfg'
+        }
+      })
+    }, 3000);
+  })
+}
+export const UserContext = createContext({
+  // Khởi tạo giá trị mặc định, và ko cần sử dụng 2 thẻ đóng mở của: UserContext.Provider
+  address: {
+    nation: 'Vietnam',
+    city: {
+      street: '200 Dien Bien Phu, Da Nang',
+      house: 'Building'
+    }
+  },
+  age: 10,
+  increaseAge: () => {}
+})
 
 export default function User() {
+  const [ age, setAge ] = useState(10)
   const [address, setAddress] = useState(initialAddress)
   const changeStreet = () => {
     setAddress((prevAddress) => ({
@@ -21,22 +46,11 @@ export default function User() {
     }))
   }
 
-  const fetchApi = () => {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        return resolve({
-          nation: 'Thai',
-          city: {
-            street: 'abc',
-            house: 'dfg'
-          }
-        })
-      }, 3000);
-    })
+  const increaseAge = () => {
+    setAge((prevAge) => prevAge + 1)
   }
 
   useEffect(() => {
-    console.log('UseEffect')
     fetchApi().then((res) => {
       setAddress((prevAddress) => {
         const newAddress = { ...prevAddress }
@@ -53,11 +67,9 @@ export default function User() {
 
   return (
     <>
-      <ul>
-        <li>Nation: {address.nation}</li>
-        <li>Street: {address.city.street}</li>
-        <li>House: {address.city.house}</li>
-      </ul>
+      <UserContext.Provider value={{ address, age, increaseAge }}>
+        <UserProfile />
+      </UserContext.Provider>
       <button onClick={changeStreet}>Change Street</button>
     </>
   )
