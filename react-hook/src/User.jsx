@@ -24,7 +24,7 @@ const fetchApi = () => {
   })
 }
 export const UserContext = createContext({
-  // Khởi tạo giá trị mặc định, và ko cần sử dụng 2 thẻ đóng mở của: UserContext.Provider
+  // Khởi tạo giá trị mặc định, và ko bắt buộc sử dụng 2 thẻ đóng mở của: UserContext.Provider
   address: {
     nation: 'Vietnam',
     city: {
