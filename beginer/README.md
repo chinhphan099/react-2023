@@ -1,70 +1,108 @@
-# Getting Started with Create React App
+# Cài đặt môi trường code React
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 1. Môi trường hoàn hảo để code
 
-## Available Scripts
+1. Nodejs để run server react dưới local
+2. VS code để code
+   - Cài thêm extention Icon Theme cho VS code (mình dùng Material Icon Theme)
+   - Prettier để format code
+   - ES Lint để quản lý tiêu chuẩn code
+3. Trình duyệt Chrome với extension là React Developer Tool và Redux Dev Tool extension
+4. Git: Tạo repo trên github để quản lý source code
 
-In the project directory, you can run:
+## 2. Khởi tạo Project với CRA
 
-### `npm start`
+## 3. Giới thiệu về cầu trúc folder Project React.Js do CRA tạo
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## 4. Sử dụng prettier và Eslint trong React.js (Tạo bằng Create React App)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### 4.1. Setting prettier on User
 
-### `npm test`
+- Editor: Default Formatter => Chọn Prettier
+- Editor: Format On Save => true
+- Files: Eol => auto
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Nếu như các bạn muốn setting mỗi workspace hiện tại thôi (nghĩa là cái folder hiện tại) thì các bạn setting bên workspace
 
-### `npm run build`
+### 4.2. Tạo file `.editorconfig` để chia sẻ một số setting giữa các editor với nhau
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```bash
+[*]
+indent_style = space
+indent_size = 2
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### 4.3. Tạo file `.prettierrc` để chia sẻ setting prettier giữa các editor
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```json
+{
+  "arrowParens": "always",
+  "semi": false,
+  "trailingComma": "none",
+  "tabWidth": 2,
+  "endOfLine": "auto",
+  "useTabs": false,
+  "singleQuote": true,
+  "printWidth": 120,
+  "jsxSingleQuote": true
+}
+```
 
-### `npm run eject`
+### 4.4. Cài các devDependencies hỗ trợ prettier và eslint trên terminal
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Ở trên thì chúng ta mới chỉ setting prettier cho editor (tức là UI), bây giờ là cho terminal. Editor thì có thể mỗi máy sẽ kiểm tra khác nhau nhưng trên terminal thì không, setting trên terminal sẽ giúp code thống nhất.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```bash
+npm i prettier eslint-plugin-prettier eslint-config-prettier -D
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Trên là những plugin cần thiết để setting Pretter và Eslint cho CRA. Các bạn nếu dùng yarn thì chạy `yarn add` nhé.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### 4.5. Tạo file `.eslintrc` để setting eslint
 
-## Learn More
+```json
+{
+  "extends": ["react-app", "prettier"],
+  "plugins": ["react", "prettier"],
+  "rules": {
+    "prettier/prettier": [
+      "warn",
+      {
+        "arrowParens": "always",
+        "semi": false,
+        "trailingComma": "none",
+        "tabWidth": 2,
+        "endOfLine": "auto",
+        "useTabs": false,
+        "singleQuote": true,
+        "printWidth": 120,
+        "jsxSingleQuote": true
+      }
+    ]
+  }
+}
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### 4.6. Thêm scripts vào package.json
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```json
+{
+  "lint": "eslint --ext js,jsx,ts,tsx src/",
+  "lint:fix": "eslint --fix --ext js,jsx,ts,tsx src/",
+  "prettier": "prettier --check \"src/**/(*.jsx|*.js|*.tsx|*ts|*.css|*.scss)\"",
+  "prettier:fix": "prettier --write \"src/**/(*.jsx|*.js|*.tsx|*ts|*.css|*.scss)\""
+}
+```
 
-### Code Splitting
+Lúc này bạn chỉ cần chạy
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+- `npm run lint`: Kiểm tra lỗi eslint
+- `npm run lint:fix`: Fix lỗi liên quan eslint (đôi lúc có những lỗi bạn phải tự fix bằng tay)
+- `npm run prettier`: Kiểm tra lỗi prettier format
+- `npm run prettier:fix`: Tự fix lỗi prettier format
 
-### Analyzing the Bundle Size
+### 4.7. Thêm file `.prettierrignore` và `.eslintignore` để ignore những file bạn không muốn prettier và eslint format
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Cú pháp viết trong những file này tương tự như trong file `.gitignore`, các bạn có thể tìm lại trong file `GitCanban.md` trong thư mục `GitCanBanDenNangCao` nhé.
 
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## 5. CICD và deploy với Vercel
