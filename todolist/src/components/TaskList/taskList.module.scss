@@ -1,0 +1,44 @@
+.title {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.tasks {
+  margin-bottom: 2rem;
+
+  &.tasksDone {
+    .taskName {
+      color: grey;
+      text-decoration: line-through;
+    }
+  }
+}
+
+.task {
+  display: flex;
+  margin-bottom: 1rem;
+
+  input {
+    flex: 0 0 10%;
+  }
+
+  .taskName {
+    flex: 1 0 0%;
+    padding: 0 0.5rem;
+
+    &+.taskName {
+      margin-top: 1rem;
+    }
+  }
+
+  .taskActions {}
+
+  .taskBtn {
+    padding: 0 0.3rem;
+    cursor: pointer;
+
+    &+.taskBtn {
+      margin-left: .3rem;
+    }
+  }
+}

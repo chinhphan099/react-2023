@@ -1,9 +1,33 @@
+/** File này chưa css reset, chạy toàn dự án */
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+:focus {
+  outline: none;
+}
+
+html {
+  font-size: 10px;
+  --font-size: 1.4rem;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans',
     'Droid Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-size: var(--font-size);
+  background-color: #e5e5e5;
+}
+
+input,
+button {
+  font-size: var(--font-size);
 }
 
 code {
