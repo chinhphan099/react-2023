@@ -9,6 +9,7 @@ export default function TodoList() {
     { name: 'Học bài', done: false, id: 'hoc bai' },
     { name: 'Học bài 2', done: false, id: 'hoc bai 2' }
   ])
+  const [currentTask, setCurrentTask] = useState<Todo | null>(null)
 
   const doneTodo = todos.filter((todo) => todo.done)
   const notDoneTodo = todos.filter((todo) => !todo.done)
@@ -35,11 +36,50 @@ export default function TodoList() {
     })
   }
 
+  const startEditTask = (id: string) => {
+    // Set current
+    const findCurrentTask = todos.find((task) => id === task.id)
+    if (findCurrentTask) {
+      setCurrentTask(findCurrentTask)
+    }
+  }
+
+  const updatingTask = (name: string) => {
+    setCurrentTask((prev: Todo | null) => {
+      if (prev) {
+        return { ...prev, name }
+      }
+      return null
+    })
+  }
+
+  const completeUpdateTask = () => {
+    setTodos((prev) => {
+      return prev.map((task) => {
+        if (task.id === (currentTask as Todo).id) {
+          return currentTask as Todo
+        }
+        return task
+      })
+    })
+    setCurrentTask(null)
+  }
+
   return (
     <div className={styles.todoList}>
-      <TaskInput addTodo={addTodo} />
-      <TaskList todos={notDoneTodo} doneTaskList={false} handleDoneTask={handleDoneTask} />
-      <TaskList todos={doneTodo} doneTaskList handleDoneTask={handleDoneTask} />
+      <TaskInput
+        addTodo={addTodo}
+        currentTask={currentTask}
+        updatingTask={updatingTask}
+        completeUpdateTask={completeUpdateTask}
+      />
+      <TaskList
+        todos={notDoneTodo}
+        doneTaskList={false}
+        handleDoneTask={handleDoneTask}
+        startEditTask={startEditTask}
+      />
+      <TaskList todos={doneTodo} doneTaskList handleDoneTask={handleDoneTask} startEditTask={startEditTask} />
     </div>
   )
 }

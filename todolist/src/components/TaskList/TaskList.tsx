@@ -5,10 +5,11 @@ interface TaskListProps {
   doneTaskList: boolean
   todos: Todo[]
   handleDoneTask: (id: string, done: boolean) => void
+  startEditTask: (id: string) => void
 }
 
 export default function TaskList(props: TaskListProps) {
-  const { doneTaskList, todos, handleDoneTask } = props
+  const { doneTaskList, todos, handleDoneTask, startEditTask } = props
   let title: string = ''
 
   if (!doneTaskList && todos.length > 0) {
@@ -33,7 +34,14 @@ export default function TaskList(props: TaskListProps) {
               />
               <span className={`${styles.taskName} ${doneTaskList ? styles.taskNameDone : ''}`}>{todo.name}</span>
               <div className={styles.taskActions}>
-                <button className={styles.taskBtn}>✎</button>
+                <button
+                  className={styles.taskBtn}
+                  onClick={() => {
+                    startEditTask(todo.id)
+                  }}
+                >
+                  ✎
+                </button>
                 <button className={styles.taskBtn}>🗑</button>
               </div>
             </div>
