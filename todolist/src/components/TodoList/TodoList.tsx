@@ -24,7 +24,7 @@ export default function TodoList() {
     // Save to localStorage
   }
 
-  const updateTodoList = (id: string, done: boolean) => {
+  const handleDoneTask = (id: string, done: boolean) => {
     setTodos((prev) => {
       return prev.map((todo) => {
         if (id === todo.id) {
@@ -38,8 +38,8 @@ export default function TodoList() {
   return (
     <div className={styles.todoList}>
       <TaskInput addTodo={addTodo} />
-      <TaskList todos={notDoneTodo} doneTaskList={false} updateTodoList={updateTodoList} />
-      <TaskList todos={doneTodo} doneTaskList updateTodoList={updateTodoList} />
+      <TaskList todos={notDoneTodo} doneTaskList={false} handleDoneTask={handleDoneTask} />
+      <TaskList todos={doneTodo} doneTaskList handleDoneTask={handleDoneTask} />
     </div>
   )
 }

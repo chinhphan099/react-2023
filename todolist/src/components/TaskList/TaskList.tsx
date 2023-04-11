@@ -4,11 +4,11 @@ import styles from './taskList.module.scss'
 interface TaskListProps {
   doneTaskList: boolean
   todos: Todo[]
-  updateTodoList: (id: string, done: boolean) => void
+  handleDoneTask: (id: string, done: boolean) => void
 }
 
 export default function TaskList(props: TaskListProps) {
-  const { doneTaskList, todos, updateTodoList } = props
+  const { doneTaskList, todos, handleDoneTask } = props
   let title: string = ''
 
   if (!doneTaskList && todos.length > 0) {
@@ -28,7 +28,7 @@ export default function TaskList(props: TaskListProps) {
                 className={styles.taskCheckbox}
                 checked={todo.done}
                 onChange={(event) => {
-                  updateTodoList(todo.id, event.target.checked)
+                  handleDoneTask(todo.id, event.target.checked)
                 }}
               />
               <span className={`${styles.taskName} ${doneTaskList ? styles.taskNameDone : ''}`}>{todo.name}</span>
