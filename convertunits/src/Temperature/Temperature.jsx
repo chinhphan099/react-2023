@@ -22,7 +22,7 @@ const convert = (temperature, convertFunc) => {
   return String(output)
 }
 
-export class Calculator extends Component {
+export class Temperature extends Component {
   constructor(props) {
     super(props)
 
@@ -43,12 +43,18 @@ export class Calculator extends Component {
     const fahrenheit = temSymbol === SCALE_NAMES.c ? convert(temperature, tinhDoF) : temperature
     return (
       <div>
-        <TemperatureInput title='Độ C' temperature={celsius} onTemperatureChange={this.handleChange(SCALE_NAMES.c)} />
-        <TemperatureInput title='Độ F' temperature={fahrenheit} onTemperatureChange={this.handleChange(SCALE_NAMES.f)} />
+        <div className='row'>
+          <div className='col'>
+            <TemperatureInput title='Độ C' temperature={celsius} onTemperatureChange={this.handleChange(SCALE_NAMES.c)} />
+          </div>
+          <div className='col'>
+            <TemperatureInput title='Độ F' temperature={fahrenheit} onTemperatureChange={this.handleChange(SCALE_NAMES.f)} />
+          </div>
+        </div>
         <Boiler celsius={celsius} />
       </div>
     )
   }
 }
 
-export default Calculator
+export default Temperature
