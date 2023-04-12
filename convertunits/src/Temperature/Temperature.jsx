@@ -42,7 +42,7 @@ export class Temperature extends Component {
     const celsius = temSymbol === SCALE_NAMES.f ? convert(temperature, tinhDoC) : temperature
     const fahrenheit = temSymbol === SCALE_NAMES.c ? convert(temperature, tinhDoF) : temperature
     return (
-      <div>
+      <>
         <div className='row'>
           <div className='col'>
             <TemperatureInput title='Độ C' temperature={celsius} onTemperatureChange={this.handleChange(SCALE_NAMES.c)} />
@@ -51,8 +51,8 @@ export class Temperature extends Component {
             <TemperatureInput title='Độ F' temperature={fahrenheit} onTemperatureChange={this.handleChange(SCALE_NAMES.f)} />
           </div>
         </div>
-        <Boiler celsius={celsius} />
-      </div>
+        {/* <Boiler celsius={celsius} /> */}
+      </>
     )
   }
 }
