@@ -14,7 +14,7 @@ export default function TodoList() {
   const doneTodo = todos.filter((todo) => todo.done)
   const notDoneTodo = todos.filter((todo) => !todo.done)
 
-  const addTodo = (name: string) => {
+  const addTask = (name: string) => {
     const todo: Todo = {
       name: name,
       done: false,
@@ -36,7 +36,7 @@ export default function TodoList() {
     })
   }
 
-  const startEditTask = (id: string) => {
+  const startUpdateTaskTitle = (id: string) => {
     // Set current
     const findCurrentTask = todos.find((task) => id === task.id)
     if (findCurrentTask) {
@@ -68,7 +68,7 @@ export default function TodoList() {
   return (
     <div className={styles.todoList}>
       <TaskInput
-        addTodo={addTodo}
+        addTask={addTask}
         currentTask={currentTask}
         updatingTask={updatingTask}
         completeUpdateTask={completeUpdateTask}
@@ -77,9 +77,14 @@ export default function TodoList() {
         todos={notDoneTodo}
         doneTaskList={false}
         handleDoneTask={handleDoneTask}
-        startEditTask={startEditTask}
+        startUpdateTaskTitle={startUpdateTaskTitle}
       />
-      <TaskList todos={doneTodo} doneTaskList handleDoneTask={handleDoneTask} startEditTask={startEditTask} />
+      <TaskList
+        todos={doneTodo}
+        doneTaskList
+        handleDoneTask={handleDoneTask}
+        startUpdateTaskTitle={startUpdateTaskTitle}
+      />
     </div>
   )
 }

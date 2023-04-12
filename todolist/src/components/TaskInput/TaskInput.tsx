@@ -3,13 +3,13 @@ import styles from './taskInput.module.scss'
 import { Todo } from '../../@types/todo.type'
 
 interface TaskInputProps {
-  addTodo: (name: string) => void
+  addTask: (name: string) => void
   currentTask: Todo | null
   updatingTask: (name: string) => void
   completeUpdateTask: () => void
 }
 export default function TaskInput(props: TaskInputProps) {
-  const { addTodo, currentTask, updatingTask, completeUpdateTask } = props
+  const { addTask, currentTask, updatingTask, completeUpdateTask } = props
   const [name, setName] = useState<string>('')
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -17,7 +17,7 @@ export default function TaskInput(props: TaskInputProps) {
     if (currentTask) {
       completeUpdateTask()
     } else {
-      addTodo(name)
+      addTask(name)
     }
     setName('')
   }

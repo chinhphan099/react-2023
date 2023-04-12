@@ -5,11 +5,11 @@ interface TaskListProps {
   doneTaskList: boolean
   todos: Todo[]
   handleDoneTask: (id: string, done: boolean) => void
-  startEditTask: (id: string) => void
+  startUpdateTaskTitle: (id: string) => void
 }
 
 export default function TaskList(props: TaskListProps) {
-  const { doneTaskList, todos, handleDoneTask, startEditTask } = props
+  const { doneTaskList, todos, handleDoneTask, startUpdateTaskTitle } = props
   let title: string = ''
 
   if (!doneTaskList && todos.length > 0) {
@@ -37,7 +37,7 @@ export default function TaskList(props: TaskListProps) {
                 <button
                   className={styles.taskBtn}
                   onClick={() => {
-                    startEditTask(todo.id)
+                    startUpdateTaskTitle(todo.id)
                   }}
                 >
                   ✎
