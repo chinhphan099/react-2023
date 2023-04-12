@@ -4,7 +4,7 @@ export default function Input(props) {
   return (
     <fieldset>
       <legend>{props.title}</legend>
-      <input type="tel" value={props.value} onChange={(event) => {props.handleChange(event.target.value)}} />
+      <input type='tel' value={props.value} onChange={(event) => {props.handleChange(event.target.value)}} />
     </fieldset>
   )
 }
@@ -12,7 +12,7 @@ export default function Input(props) {
 
 Input.propTypes = {
   title: PropTypes.string,
-  temperature: PropTypes.string,
-  onTemperatureChange: PropTypes.func
+  value: PropTypes.string,
+  handleChange: PropTypes.func
 }
 
