@@ -34,12 +34,14 @@ export default function TodoList() {
 
   const handleDoneTask = (id: string, done: boolean) => {
     setTodos((prev) => {
-      return prev.map((todo) => {
+      const newToDoList = prev.map((todo) => {
         if (id === todo.id) {
           return { ...todo, done }
         }
         return todo
       })
+      localStorage.setItem('tasklist', JSON.stringify(newToDoList))
+      return newToDoList
     })
   }
 
