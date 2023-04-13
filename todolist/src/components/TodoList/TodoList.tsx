@@ -65,6 +65,15 @@ export default function TodoList() {
     setCurrentTask(null)
   }
 
+  const deleteTask = (id: string) => {
+    // filter and delete
+    const newTodoList = [...todos].filter((task) => task.id !== id)
+    setTodos(newTodoList)
+    if (currentTask) {
+      setCurrentTask(null)
+    }
+  }
+
   return (
     <div className={styles.todoList}>
       <TaskInput
@@ -78,12 +87,14 @@ export default function TodoList() {
         doneTaskList={false}
         handleDoneTask={handleDoneTask}
         startUpdateTaskTitle={startUpdateTaskTitle}
+        deleteTask={deleteTask}
       />
       <TaskList
         todos={doneTodo}
         doneTaskList
         handleDoneTask={handleDoneTask}
         startUpdateTaskTitle={startUpdateTaskTitle}
+        deleteTask={deleteTask}
       />
     </div>
   )
