@@ -4,6 +4,18 @@ import TaskList from '../TaskList'
 import styles from './todoList.module.scss'
 import { Todo } from '../../@types/todo.type'
 
+// interface HandleNewTodos {
+//   (todos: Todo[]): Todo[]
+// }
+type HandleNewTodos = (todos: Todo[]) => Todo[]
+
+const syncToLocalStorage = (HandleNewTodos: HandleNewTodos) => {
+  const taskListDb = localStorage.getItem('tasklist')
+  const taskListDbArray = JSON.parse(taskListDb || '[]')
+  const newTaskListDbArray = HandleNewTodos(taskListDbArray)
+  localStorage.setItem('tasklist', JSON.stringify(newTaskListDbArray))
+}
+
 export default function TodoList() {
   const [todos, setTodos] = useState<Todo[]>([])
   const [currentTask, setCurrentTask] = useState<Todo | null>(null)
@@ -26,23 +38,20 @@ export default function TodoList() {
     setTodos((prev) => [...prev, todo])
 
     // Save to localStorage
-    const taskListDb = localStorage.getItem('tasklist')
-    const taskListDbArray = JSON.parse(taskListDb || '[]')
-    const newTaskListDbArray = [...taskListDbArray, todo]
-    localStorage.setItem('tasklist', JSON.stringify(newTaskListDbArray))
+    syncToLocalStorage((todosObj: Todo[]) => [...todosObj, todo]) // todosObj được truyền trong syncToLocalStorage
   }
 
   const handleDoneTask = (id: string, done: boolean) => {
-    setTodos((prev) => {
-      const newToDoList = prev.map((todo) => {
+    const callback = (todoObj: Todo[]) => {
+      return todoObj.map((todo) => {
         if (id === todo.id) {
           return { ...todo, done }
         }
         return todo
       })
-      localStorage.setItem('tasklist', JSON.stringify(newToDoList))
-      return newToDoList
-    })
+    }
+    setTodos(callback)
+    syncToLocalStorage(callback)
   }
 
   const startUpdateTaskTitle = (id: string) => {
@@ -63,26 +72,26 @@ export default function TodoList() {
   }
 
   const completeUpdateTask = () => {
-    setTodos((prev) => {
-      const newToDoList = prev.map((task) => {
+    const callback = (todoArray: Todo[]) => {
+      return todoArray.map((task) => {
         if (task.id === (currentTask as Todo).id) {
           return currentTask as Todo
         }
         return task
       })
-      localStorage.setItem('tasklist', JSON.stringify(newToDoList))
-      return newToDoList
-    })
+    }
+    setTodos(callback)
     setCurrentTask(null)
+    syncToLocalStorage(callback)
   }
 
   const deleteTask = (id: string) => {
-    const newToDoList = todos.filter((task) => task.id !== id)
-    setTodos(newToDoList)
-    localStorage.setItem('tasklist', JSON.stringify(newToDoList))
     if (currentTask) {
       setCurrentTask(null)
     }
+    const callback = (todos: Todo[]) => todos.filter((task) => task.id !== id)
+    setTodos(callback)
+    syncToLocalStorage(callback)
   }
 
   return (
