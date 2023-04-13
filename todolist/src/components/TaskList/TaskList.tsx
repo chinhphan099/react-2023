@@ -13,9 +13,9 @@ export default function TaskList(props: TaskListProps) {
   const { doneTaskList, todos, handleDoneTask, startUpdateTaskTitle, deleteTask } = props
   let title: string = ''
 
-  if (!doneTaskList && todos.length > 0) {
+  if (doneTaskList && todos.length > 0) {
     title = 'Hoàn thành'
-  } else if (doneTaskList && todos.length > 0) {
+  } else if (!doneTaskList && todos.length > 0) {
     title = 'Chưa hoàn thành'
   }
   return (

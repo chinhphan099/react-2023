@@ -1,18 +1,21 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import TaskInput from '../TaskInput'
 import TaskList from '../TaskList'
 import styles from './todoList.module.scss'
 import { Todo } from '../../@types/todo.type'
 
 export default function TodoList() {
-  const [todos, setTodos] = useState<Todo[]>([
-    { name: 'Học bài', done: false, id: 'hoc bai' },
-    { name: 'Học bài 2', done: false, id: 'hoc bai 2' }
-  ])
+  const [todos, setTodos] = useState<Todo[]>([])
   const [currentTask, setCurrentTask] = useState<Todo | null>(null)
 
   const doneTodo = todos.filter((todo) => todo.done)
   const notDoneTodo = todos.filter((todo) => !todo.done)
+
+  useEffect(() => {
+    const taskListDb = localStorage.getItem('tasklist')
+    const taskListDbArray = JSON.parse(taskListDb || '[]')
+    setTodos(taskListDbArray)
+  }, [])
 
   const addTask = (name: string) => {
     const todo: Todo = {
@@ -23,6 +26,10 @@ export default function TodoList() {
     setTodos((prev) => [...prev, todo])
 
     // Save to localStorage
+    const taskListDb = localStorage.getItem('tasklist')
+    const taskListDbArray = JSON.parse(taskListDb || '[]')
+    const newTaskListDbArray = [...taskListDbArray, todo]
+    localStorage.setItem('tasklist', JSON.stringify(newTaskListDbArray))
   }
 
   const handleDoneTask = (id: string, done: boolean) => {
@@ -55,20 +62,22 @@ export default function TodoList() {
 
   const completeUpdateTask = () => {
     setTodos((prev) => {
-      return prev.map((task) => {
+      const newToDoList = prev.map((task) => {
         if (task.id === (currentTask as Todo).id) {
           return currentTask as Todo
         }
         return task
       })
+      localStorage.setItem('tasklist', JSON.stringify(newToDoList))
+      return newToDoList
     })
     setCurrentTask(null)
   }
 
   const deleteTask = (id: string) => {
-    // filter and delete
-    const newTodoList = [...todos].filter((task) => task.id !== id)
-    setTodos(newTodoList)
+    const newToDoList = todos.filter((task) => task.id !== id)
+    setTodos(newToDoList)
+    localStorage.setItem('tasklist', JSON.stringify(newToDoList))
     if (currentTask) {
       setCurrentTask(null)
     }
