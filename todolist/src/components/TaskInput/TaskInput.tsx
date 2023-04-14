@@ -14,12 +14,13 @@ export default function TaskInput(props: TaskInputProps) {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    if (currentTask) {
+    if (currentTask && currentTask.name !== '') {
       completeUpdateTask()
-    } else {
-      addTask(name)
     }
-    setName('')
+    if (name !== '') {
+      addTask(name)
+      setName('')
+    }
   }
   const handleOnChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (currentTask) {
