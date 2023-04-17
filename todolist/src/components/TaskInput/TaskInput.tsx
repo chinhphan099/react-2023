@@ -1,14 +1,15 @@
 import { useState } from 'react'
 import styles from './taskInput.module.scss'
 import { Todo } from '../../@types/todo.type'
+import connect, { ExtraInfoType } from '../../HOC/connect'
 
-interface TaskInputProps {
+interface TaskInputProps extends ExtraInfoType {
   addTask: (name: string) => void
   currentTask: Todo | null
   updatingTask: (name: string) => void
   completeUpdateTask: () => void
 }
-export default function TaskInput(props: TaskInputProps) {
+function TaskInput(props: TaskInputProps) {
   const { addTask, currentTask, updatingTask, completeUpdateTask } = props
   const [name, setName] = useState<string>('')
 
@@ -39,3 +40,5 @@ export default function TaskInput(props: TaskInputProps) {
     </div>
   )
 }
+
+export default connect(TaskInput)
