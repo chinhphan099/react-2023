@@ -14,10 +14,13 @@ function TaskInput(props: TaskInputProps) {
   const { addTask, currentTask, updatingTask, completeUpdateTask } = props
   const [name, setName] = useState<string>('')
   const title = useMemo(() => {
-    return {
-      name: 'Chinh'
+    if (currentTask) {
+      return { name: 'Editing - ' }
     }
-  }, [])
+    return {
+      name: ''
+    }
+  }, [currentTask])
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()

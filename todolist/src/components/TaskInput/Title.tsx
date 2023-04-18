@@ -9,6 +9,6 @@ type TitleProps = {
 
 function Title(props: TitleProps) {
   console.log('title')
-  return <h1 className={styles.title}>{props.title.name} - To do list typescript</h1>
+  return <h1 className={styles.title}>{props.title.name}To do list typescript</h1>
 }
 export default React.memo(Title)
