@@ -2,6 +2,7 @@ import { useState } from 'react'
 import styles from './taskInput.module.scss'
 import { Todo } from '../../@types/todo.type'
 import connect, { ExtraInfoType } from '../../HOC/connect'
+import Title from './Title'
 
 interface TaskInputProps extends ExtraInfoType {
   addTask: (name: string) => void
@@ -32,7 +33,7 @@ function TaskInput(props: TaskInputProps) {
   }
   return (
     <div>
-      <h1 className={styles.title}>To do list typescript</h1>
+      <Title />
       <form className={styles.form} onSubmit={handleSubmit}>
         <input type='text' value={currentTask ? currentTask.name : name} onChange={handleOnChangeInput} />
         <button type='submit'>{currentTask ? '✔️' : '﹢'}</button>
