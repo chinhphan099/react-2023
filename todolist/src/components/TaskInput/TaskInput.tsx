@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import styles from './taskInput.module.scss'
 import { Todo } from '../../@types/todo.type'
 import connect, { ExtraInfoType } from '../../HOC/connect'
@@ -13,6 +13,11 @@ interface TaskInputProps extends ExtraInfoType {
 function TaskInput(props: TaskInputProps) {
   const { addTask, currentTask, updatingTask, completeUpdateTask } = props
   const [name, setName] = useState<string>('')
+  const title = useMemo(() => {
+    return {
+      name: 'Chinh'
+    }
+  }, [])
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -33,7 +38,7 @@ function TaskInput(props: TaskInputProps) {
   }
   return (
     <div>
-      <Title />
+      <Title title={title} />
       <form className={styles.form} onSubmit={handleSubmit}>
         <input type='text' value={currentTask ? currentTask.name : name} onChange={handleOnChangeInput} />
         <button type='submit'>{currentTask ? '✔️' : '﹢'}</button>
