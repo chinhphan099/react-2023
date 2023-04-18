@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import styles from './taskInput.module.scss'
 import { Todo } from '../../@types/todo.type'
 import connect, { ExtraInfoType } from '../../HOC/connect'
@@ -21,6 +21,7 @@ function TaskInput(props: TaskInputProps) {
       name: ''
     }
   }, [currentTask])
+  const handleTitleClick = useCallback((value: any) => console.log(value), [])
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -41,7 +42,7 @@ function TaskInput(props: TaskInputProps) {
   }
   return (
     <div>
-      <Title title={title} />
+      <Title title={title} handleTitleClick={handleTitleClick} />
       <form className={styles.form} onSubmit={handleSubmit}>
         <input type='text' value={currentTask ? currentTask.name : name} onChange={handleOnChangeInput} />
         <button type='submit'>{currentTask ? '✔️' : '﹢'}</button>
