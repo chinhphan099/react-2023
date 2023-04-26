@@ -14,9 +14,9 @@ export default function TaskList(props: TaskListProps) {
   let title: string = ''
 
   if (doneTaskList && todos.length > 0) {
-    title = 'Hoàn thành'
+    title = 'Done'
   } else if (!doneTaskList && todos.length > 0) {
-    title = 'Chưa hoàn thành'
+    title = 'Task'
   }
   return (
     <div>
