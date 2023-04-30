@@ -2,6 +2,17 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Install
+### yarn create react-app NAME --template typescript
+### yarn add -D prettier eslint-plugin-prettier eslint-config-prettier
+### update package.json: lint, lint:fix, prettier, prettier:fix
+### add .editorconfig, .prettierrc, .eslintrc files
+### yarn add -D postcss tailwindcss autoprefixer
+### yarn add -D prettier-plugin-tailwindcss
+### yarn lint:fix
+### yarn prettier:fix
+### yarn add @reduxjs/toolkit react-redux
+
 ## Available Scripts
 
 In the project directory, you can run:
