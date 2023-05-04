@@ -1,5 +1,5 @@
 import { addPost, cancelEditingPost, finishEditingPost } from 'pages/blog/blog.slice'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from 'store'
 import { Post } from 'types/blog.type'
@@ -16,9 +16,11 @@ const initialState: Post = {
 export default function CreatePost() {
   const [formData, setFormData] = useState<Post>(initialState)
   const editingPost = useSelector((state: RootState) => state.blog.editingPost)
+  const titleRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
     setFormData(editingPost || initialState)
+    titleRef.current?.focus()
   }, [editingPost])
 
   const dispath = useDispatch()
@@ -55,6 +57,7 @@ export default function CreatePost() {
           placeholder='Title'
           required
           value={formData.title}
+          ref={titleRef}
           onChange={(event) => setFormData((state) => ({ ...state, title: event.target.value }))}
         />
       </div>

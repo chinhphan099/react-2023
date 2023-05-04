@@ -6,10 +6,12 @@ import { Post } from 'types/blog.type'
 interface BlogState {
   postList: Post[]
   editingPost: Post | null
+  toggleCreatePostForm: boolean
 }
 const initialState: BlogState = {
   postList: initialPostList,
-  editingPost: null
+  editingPost: null,
+  toggleCreatePostForm: false
 }
 
 const blogSlice = createSlice({
@@ -57,6 +59,9 @@ const blogSlice = createSlice({
     },
     cancelEditingPost: (state) => {
       state.editingPost = null
+    },
+    toggleCreatePostForm: (state) => {
+      state.toggleCreatePostForm = !state.toggleCreatePostForm
     }
   },
   extraReducers(builder) {
@@ -72,6 +77,6 @@ const blogSlice = createSlice({
       })
   }
 })
-export const { addPost, deletePost, startEditingPost, finishEditingPost, cancelEditingPost } = blogSlice.actions
+export const { addPost, deletePost, startEditingPost, finishEditingPost, cancelEditingPost, toggleCreatePostForm } = blogSlice.actions
 const blogReducer = blogSlice.reducer
 export default blogReducer
