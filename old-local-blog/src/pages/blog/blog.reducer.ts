@@ -11,7 +11,7 @@ const initalState: BlogState = {
   editingPost: null
 }
 
-export const addPost = createAction<Post>('blog/addPost', function (post: Omit<Post, 'id'>) {
+export const addPost = createAction('blog/addPost', function (post: Omit<Post, 'id'>) {
   return {
     payload: {
       ...post,
