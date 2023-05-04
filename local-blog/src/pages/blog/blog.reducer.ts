@@ -1,13 +1,13 @@
 import { createAction, createReducer } from '@reduxjs/toolkit'
-import { initalPostList } from 'constant/blog'
+import { initialPostList } from 'constant/blog'
 import { Post } from 'types/blog.type'
 
 interface BlogState {
   postList: Post[]
   editingPost: Post | null
 }
-const initalState: BlogState = {
-  postList: initalPostList,
+const initialState: BlogState = {
+  postList: initialPostList,
   editingPost: null
 }
 
@@ -17,7 +17,7 @@ export const startEditingPost = createAction<string>('blog/startEditingPost')
 export const finishEditingPost = createAction<Post>('blog/finishEditingPost')
 export const cancelEditingPost = createAction('blog/cancelEditingPost')
 
-const blogReducer = createReducer(initalState, (builder) => {
+const blogReducer = createReducer(initialState, (builder) => {
   builder
     .addCase(addPost, (state, action) => {
       const post = action.payload
