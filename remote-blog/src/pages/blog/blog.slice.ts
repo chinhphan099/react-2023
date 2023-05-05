@@ -1,6 +1,4 @@
-// import { PayloadAction, createAction, createReducer, createSlice, current, nanoid } from '@reduxjs/toolkit'
-import { PayloadAction, createAsyncThunk, createSlice, current, nanoid } from '@reduxjs/toolkit'
-import { initialPostList } from 'constant/blog'
+import { PayloadAction, createAsyncThunk, createSlice, current } from '@reduxjs/toolkit'
 import { Post } from 'types/blog.type'
 import http from 'utils/http'
 
@@ -20,23 +18,17 @@ export const getPostList = createAsyncThunk('blog/getPostList', async (_, thunkA
   })
   return response.data
 })
+export const addPost = createAsyncThunk('blog/addPost', async (body: Omit<Post, 'id'>, thunkAPI) => {
+  const response = await http.post<Post>('posts', body, {
+    signal: thunkAPI.signal
+  })
+  return response.data
+})
 
 const blogSlice = createSlice({
   name: 'blog',
   initialState,
   reducers: {
-    addPost: {
-      reducer: (state, action: PayloadAction<Post>) => {
-        const post = action.payload
-        state.postList.push(post)
-      },
-      prepare: (post: Omit<Post, 'id'>) => ({
-        payload: {
-          ...post,
-          id: nanoid()
-        }
-      })
-    },
     deletePost: (state, action: PayloadAction<string>) => {
       const id = action.payload
       const foundPostIndex = state.postList.findIndex((post) => post.id === id)
@@ -76,6 +68,9 @@ const blogSlice = createSlice({
       .addCase(getPostList.fulfilled, (state, action) => {
         state.postList = action.payload
       })
+      .addCase(addPost.fulfilled, (state, action) => {
+        state.postList.push(action.payload)
+      })
       .addMatcher(
         (action) => action.type.includes('cancel'),
         (state, action) => {
@@ -88,7 +83,7 @@ const blogSlice = createSlice({
   }
 })
 
-export const { addPost, deletePost, startEditingPost, finishEditingPost, cancelEditingPost, toggleCreatePostForm } =
+export const { deletePost, startEditingPost, finishEditingPost, cancelEditingPost, toggleCreatePostForm } =
   blogSlice.actions
 const blogReducer = blogSlice.reducer
 export default blogReducer

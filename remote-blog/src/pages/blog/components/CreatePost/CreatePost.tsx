@@ -1,7 +1,7 @@
 import { addPost, cancelEditingPost, finishEditingPost } from 'pages/blog/blog.slice'
 import { useEffect, useRef, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { RootState } from 'store'
+import { useSelector } from 'react-redux'
+import { RootState, useAppDispatch } from 'store'
 import { Post } from 'types/blog.type'
 
 const initialState: Post = {
@@ -23,13 +23,12 @@ export default function CreatePost() {
     titleRef.current?.focus()
   }, [editingPost])
 
-  const dispath = useDispatch()
+  const dispath = useAppDispatch()
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     if (!editingPost) {
-      const data = { ...formData, id: new Date().toISOString() }
-      dispath(addPost(data))
+      dispath(addPost(formData))
     } else {
       dispath(finishEditingPost(formData))
     }
