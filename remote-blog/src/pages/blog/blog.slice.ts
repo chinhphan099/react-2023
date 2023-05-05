@@ -1,7 +1,8 @@
 // import { PayloadAction, createAction, createReducer, createSlice, current, nanoid } from '@reduxjs/toolkit'
-import { PayloadAction, createSlice, current, nanoid } from '@reduxjs/toolkit'
+import { PayloadAction, createAsyncThunk, createSlice, current, nanoid } from '@reduxjs/toolkit'
 import { initialPostList } from 'constant/blog'
 import { Post } from 'types/blog.type'
+import http from 'utils/http'
 
 interface BlogState {
   postList: Post[]
@@ -9,10 +10,16 @@ interface BlogState {
   toggleCreatePostForm: boolean
 }
 const initialState: BlogState = {
-  postList: initialPostList,
+  postList: [],
   editingPost: null,
   toggleCreatePostForm: false
 }
+export const getPostList = createAsyncThunk('blog/getPostList', async (_, thunkAPI) => {
+  const response = await http.get<Post[]>('posts', {
+    signal: thunkAPI.signal
+  })
+  return response.data
+})
 
 const blogSlice = createSlice({
   name: 'blog',
@@ -66,6 +73,9 @@ const blogSlice = createSlice({
   },
   extraReducers(builder) {
     builder
+      .addCase(getPostList.fulfilled, (state, action) => {
+        state.postList = action.payload
+      })
       .addMatcher(
         (action) => action.type.includes('cancel'),
         (state, action) => {
@@ -77,6 +87,8 @@ const blogSlice = createSlice({
       })
   }
 })
-export const { addPost, deletePost, startEditingPost, finishEditingPost, cancelEditingPost, toggleCreatePostForm } = blogSlice.actions
+
+export const { addPost, deletePost, startEditingPost, finishEditingPost, cancelEditingPost, toggleCreatePostForm } =
+  blogSlice.actions
 const blogReducer = blogSlice.reducer
 export default blogReducer
