@@ -44,6 +44,7 @@ const blogSlice = createSlice({
       const id = action.payload
       const foundPost = state.postList.find((post) => post.id === id) || null
       state.editingPost = foundPost
+      state.toggleCreatePostForm = true
     },
     finishEditingPost: (state, action: PayloadAction<Post>) => {
       const postId = action.payload.id
@@ -58,6 +59,7 @@ const blogSlice = createSlice({
     },
     cancelEditingPost: (state) => {
       state.editingPost = null
+      state.toggleCreatePostForm = !state.toggleCreatePostForm
     },
     toggleCreatePostForm: (state) => {
       state.toggleCreatePostForm = !state.toggleCreatePostForm
