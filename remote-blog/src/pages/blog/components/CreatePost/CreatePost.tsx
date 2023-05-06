@@ -1,4 +1,4 @@
-import { addPost, cancelEditingPost, finishEditingPost } from 'pages/blog/blog.slice'
+import { addPost, cancelEditingPost, finishEditingPost, updatePost } from 'pages/blog/blog.slice'
 import { useEffect, useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { RootState, useAppDispatch } from 'store'
@@ -30,7 +30,12 @@ export default function CreatePost() {
     if (!editingPost) {
       dispath(addPost(formData))
     } else {
-      dispath(finishEditingPost(formData))
+      dispath(
+        updatePost({
+          postId: editingPost.id,
+          body: formData
+        })
+      )
     }
     setFormData(initialState)
   }
