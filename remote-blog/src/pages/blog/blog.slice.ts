@@ -33,38 +33,22 @@ export const updatePost = createAsyncThunk(
     return response.data
   }
 )
+export const deletePost = createAsyncThunk('blog/deletePost', async (postId: string, thunkAPI) => {
+  const response = await http.delete<Post>(`posts/${postId}`, {
+    signal: thunkAPI.signal
+  })
+  return response.data
+})
 
 const blogSlice = createSlice({
   name: 'blog',
   initialState,
   reducers: {
-    deletePost: (state, action: PayloadAction<string>) => {
-      const id = action.payload
-      const foundPostIndex = state.postList.findIndex((post) => post.id === id)
-      const foundPost = state.postList.find((post) => post.id === id) || null
-      if (foundPostIndex !== -1 && foundPost) {
-        state.postList.splice(foundPostIndex, 1)
-        if (state.editingPost && state.editingPost.id === foundPost.id) {
-          state.editingPost = null
-        }
-      }
-    },
     startEditingPost: (state, action: PayloadAction<string>) => {
       const id = action.payload
       const foundPost = state.postList.find((post) => post.id === id) || null
       state.editingPost = foundPost
       state.toggleCreatePostForm = true
-    },
-    finishEditingPost: (state, action: PayloadAction<Post>) => {
-      const postId = action.payload.id
-      state.postList.some((post, index) => {
-        if (post.id === postId) {
-          state.postList[index] = action.payload
-          return true
-        }
-        return false
-      })
-      state.editingPost = null
     },
     cancelEditingPost: (state) => {
       state.editingPost = null
@@ -92,6 +76,17 @@ const blogSlice = createSlice({
         })
         state.editingPost = null
       })
+      .addCase(deletePost.fulfilled, (state, action) => {
+        const id = action.meta.arg
+        const foundPostIndex = state.postList.findIndex((post) => post.id === id)
+        const foundPost = state.postList.find((post) => post.id === id) || null
+        if (foundPostIndex !== -1 && foundPost) {
+          state.postList.splice(foundPostIndex, 1)
+          if (state.editingPost && state.editingPost.id === foundPost.id) {
+            state.editingPost = null
+          }
+        }
+      })
       .addMatcher(
         (action) => action.type.includes('cancel'),
         (state, action) => {
@@ -104,7 +99,6 @@ const blogSlice = createSlice({
   }
 })
 
-export const { deletePost, startEditingPost, finishEditingPost, cancelEditingPost, toggleCreatePostForm } =
-  blogSlice.actions
+export const { startEditingPost, cancelEditingPost, toggleCreatePostForm } = blogSlice.actions
 const blogReducer = blogSlice.reducer
 export default blogReducer
