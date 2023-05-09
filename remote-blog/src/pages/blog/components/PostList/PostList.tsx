@@ -4,9 +4,11 @@ import { RootState, useAppDispatch } from 'store'
 import { deletePost, getPostList, startEditingPost, toggleCreatePostForm } from 'pages/blog/blog.slice'
 import styles from './PostList.module.css'
 import { useEffect } from 'react'
+import SkeletonPost from '../SkeletonPost'
 
 export default function PostList() {
   const postList = useSelector((state: RootState) => state.blog.postList)
+  const loading = useSelector((state: RootState) => state.blog.loading)
   const dispath = useAppDispatch()
 
   useEffect(() => {
@@ -36,14 +38,21 @@ export default function PostList() {
           </p>
         </div>
         <div className='grid gap-4 sm:grid-cols-2 md:gap-6 lg:grid-cols-2 xl:grid-cols-2 xl:gap-8'>
-          {postList.map((postItem) => (
-            <PostItem
-              post={postItem}
-              key={postItem.id}
-              handleDetele={handleDetele}
-              handleStartEditing={handleStartEditing}
-            />
-          ))}
+          {loading && (
+            <>
+              <SkeletonPost />
+              <SkeletonPost />
+            </>
+          )}
+          {!loading &&
+            postList.map((postItem) => (
+              <PostItem
+                post={postItem}
+                key={postItem.id}
+                handleDetele={handleDetele}
+                handleStartEditing={handleStartEditing}
+              />
+            ))}
         </div>
       </div>
       <div className={styles.ButtonWrap}>

@@ -1,16 +1,26 @@
-import { PayloadAction, createAsyncThunk, createSlice, current } from '@reduxjs/toolkit'
+import { PayloadAction, AsyncThunk, createAsyncThunk, createSlice, current } from '@reduxjs/toolkit'
 import { Post } from 'types/blog.type'
 import http from 'utils/http'
+
+type GenericAsyncThunk = AsyncThunk<unknown, unknown, any>
+
+type PendingAction = ReturnType<GenericAsyncThunk['pending']>
+type RejectedAction = ReturnType<GenericAsyncThunk['rejected']>
+type FulfilledAction = ReturnType<GenericAsyncThunk['fulfilled']>
 
 interface BlogState {
   postList: Post[]
   editingPost: Post | null
   toggleCreatePostForm: boolean
+  loading: boolean
+  currentRequestId: undefined | string
 }
 const initialState: BlogState = {
   postList: [],
   editingPost: null,
-  toggleCreatePostForm: false
+  toggleCreatePostForm: false,
+  loading: false,
+  currentRequestId: undefined
 }
 export const getPostList = createAsyncThunk('blog/getPostList', async (_, thunkAPI) => {
   const response = await http.get<Post[]>('posts', {
@@ -87,10 +97,29 @@ const blogSlice = createSlice({
           }
         }
       })
-      .addMatcher(
-        (action) => action.type.includes('cancel'),
+      .addMatcher<PendingAction>(
+        (action) => action.type.endsWith('/pending'),
         (state, action) => {
-          console.log(current(state))
+          state.loading = true
+          state.currentRequestId = action.meta.requestId
+        }
+      )
+      .addMatcher<RejectedAction>(
+        (action) => action.type.endsWith('/rejected'),
+        (state, action) => {
+          if (state.loading && state.currentRequestId === action.meta.requestId) {
+            state.loading = false
+            state.currentRequestId = undefined
+          }
+        }
+      )
+      .addMatcher<FulfilledAction>(
+        (action) => action.type.endsWith('/fulfilled'),
+        (state, action) => {
+          if (state.loading && state.currentRequestId === action.meta.requestId) {
+            state.loading = false
+            state.currentRequestId = undefined
+          }
         }
       )
       .addDefaultCase((state, action) => {
